@@ -20,7 +20,9 @@ const displayUser = async (filter = "https://jsonplaceholder.typicode.com/users"
             <div class="card-body">
               <h5 class="card-title">${user.name}</h5>
               <p class="card-text">
-                ${user.email}
+                <p>ID: ${user.id}</p>
+                <p>Username: ${user.username}</p>
+                <p>Email: ${user.email}</p>
               </p>
             </div>
           </div>
