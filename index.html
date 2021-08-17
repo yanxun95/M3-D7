@@ -45,6 +45,32 @@
     <title>Hello, world!</title>
   </head>
   <body>
+    <div class="container mt-5">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          aria-label="Text input with dropdown button"
+          onkeyup="getUserInput(event)"
+        />
+        <div class="input-group-append">
+          <select class="custom-select" id="inputGroupSelect01">
+            <option value="name">Name</option>
+            <option value="username">Username</option>
+            <option value="email">Email</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-5">
+      <div class="row all-user"></div>
+    </div>
+
+    <div class="container mt-5 username">
+      <div class="row all-user-name"></div>
+    </div>
+
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
