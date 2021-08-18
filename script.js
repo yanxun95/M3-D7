@@ -1,18 +1,34 @@
-window.onload = () => {
-
-    displayUser();
-    displayUsername();
-}
-
 const rowUser = document.querySelector(".row.all-user");
 const rowUsername = document.querySelector(".row.all-user-name");
 let userArr = [];
+let userInput = "";
 
-const displayUser = async (filter = "https://jsonplaceholder.typicode.com/users") => {
-    let response = await fetch(filter);
+window.onload = async () => {
+    let response = await fetch("https://jsonplaceholder.typicode.com/users");
     let users = await response.json();
     userArr = users;
+
+    initDisplayUser(userArr);
+    displayUsername();
+}
+
+
+function initDisplayUser(userArr) {
     rowUser.innerHTML = ""
+    // rowUser.innerHTML = userArr.map((user) => `
+    //         <div class="col-sm">
+    //             <div class="card" style="width: 18rem">
+    //                 <div class="card-body">
+    //                 <h5 class="card-title">${user.name}</h5>
+    //                     <p class="card-text">
+    //                         <p>ID: ${user.id}</p>
+    //                         <p>Username: ${user.username}</p>
+    //                         <p>Email: ${user.email}</p>
+    //                     </p>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     `).join("")
 
     userArr.forEach(user => {
         rowUser.innerHTML += `<div class="col-sm">
@@ -30,11 +46,9 @@ const displayUser = async (filter = "https://jsonplaceholder.typicode.com/users"
     });
 }
 
-const displayUsername = async (filter = "https://jsonplaceholder.typicode.com/users") => {
-    let response = await fetch(filter);
-    let users = await response.json();
-
-    users.forEach(user => {
+const displayUsername = () => {
+    console.log(userArr)
+    userArr.forEach(user => {
         rowUsername.innerHTML += `<div class="col-sm">
           <div class="card" style="width: 18rem">
             <div class="card-body">
@@ -47,24 +61,23 @@ const displayUsername = async (filter = "https://jsonplaceholder.typicode.com/us
 }
 
 const getUserInput = (e) => {
-    let query = e.target.value;
-    // let query = userInput.charAt(0).toUpperCase() + userInput.slice(1);
-    if (query.length > 3) {
+    userInput = e.target.value;
+    let query = userInput.split(' ').map(capitalize).join(' ');
+
+    const finalQuery = userArr.filter(user =>
+        user.name.includes(query)
+    )
+
+    if (query.length > 0) {
         let searchFilter = document.querySelector(".custom-select").value;
-        filterUser(query, searchFilter);
+        initDisplayUser(finalQuery)
     } else if (query.length == 0) {
-        filterUser();
+        initDisplayUser(userArr);
     }
 }
 
-// const capitalizeFirstLetter = (str) => {
-
-// }
-
-const filterUser = (query, filter) => {
-    filter == "name" ? displayUser(`https://jsonplaceholder.typicode.com/users?name=${query}`)
-        : filter == "username" ? displayUser(`https://jsonplaceholder.typicode.com/users?username=${query}`)
-            : filter == "email" ? displayUser(`https://jsonplaceholder.typicode.com/users?email=${query}`)
-                : displayUser();
+const capitalize = (userInput) => {
+    return userInput.charAt(0).toUpperCase() + userInput.slice(1);
 }
+
 
